@@ -29,5 +29,17 @@ public class Rect {
   public int getHeight() {
     return height;
   }
+  
+  public Coordinate getCenter() {
+    return new Coordinate(x + width / 2, y + height / 2);
+  }
+  
+  public Rect meanRect(Rect another) {
+    int newWidth = (width + another.width) / 2;
+    int newHeight = (height + another.height) / 2;
+    int newX = (x + another.x) / 2;
+    int newY = (y + another.y) / 2;
+    return new Rect(newX, newY, newWidth, newHeight);
+  }
 
 }

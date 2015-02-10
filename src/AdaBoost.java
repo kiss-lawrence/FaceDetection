@@ -81,10 +81,6 @@ public class AdaBoost {
     }
   }
   
-  public static void main(String[] args) {
-    
-  }
-  
 }
 
 

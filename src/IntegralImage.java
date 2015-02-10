@@ -1,8 +1,4 @@
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
 
 
 public class IntegralImage {
@@ -11,16 +7,15 @@ public class IntegralImage {
   private final int[][] intensity;
   
   public IntegralImage(String path) {
-    BufferedImage img = null;
-    try {
-      img = ImageIO.read(new File(path));
-    } catch (IOException e) { }
-    
+    this(Utils.readBufferedImage(path));
+  }
+  
+  public IntegralImage(BufferedImage img) {
     width = img.getWidth();
     height = img.getHeight();
     intensity = new int[width][height];
     storeInArray(img);
-    preProcess();
+    preProcess(); 
   }
   
   private void storeInArray(BufferedImage img) {
@@ -56,7 +51,6 @@ public class IntegralImage {
     return x >= 0 && x < width && y >= 0 && y < height;
   }
   
-  // Pre: Rectangle is within the image.
   public int sumValue(Rect r) {
     int x = r.getX(), y = r.getY(), 
         x2 = x + r.getWidth() - 1, y2 = y + r.getHeight() - 1;

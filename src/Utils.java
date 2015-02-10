@@ -1,8 +1,12 @@
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import javax.imageio.ImageIO;
 
 import com.thoughtworks.xstream.XStream;
 
@@ -40,6 +44,14 @@ public class Utils {
     }
     input.close();
     return ret;
+  }
+  
+  public static BufferedImage readBufferedImage(String path) {
+    BufferedImage img = null;
+    try {
+      img = ImageIO.read(new File(path));
+    } catch (IOException e) { }
+    return img;
   }
   
 }
