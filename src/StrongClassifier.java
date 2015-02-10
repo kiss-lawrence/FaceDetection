@@ -33,11 +33,11 @@ public class StrongClassifier implements Classifier {
   }
   
   @Override
-  public Lable classify(IntegralImage img, double scale) {
+  public Lable classify(IntegralImage img, Rect windowRect) {
     double sum = 0d;
     for (int i = 0; i < wkClassifiers.size(); i++) {
       WeakClassifier wkCf = wkClassifiers.get(i); 
-      sum += wkCf.classify(img, scale) == Lable.FACE ? weights.get(i) : 0d;
+      sum += wkCf.classify(img, windowRect) == Lable.FACE ? weights.get(i) : 0d;
     }
     if (sum > threshold) {
       return Lable.FACE;

@@ -1,23 +1,19 @@
 public class FeatureD extends Feature {
 
-  public FeatureD(Rect rect) {
-    super(rect);
+  public FeatureD(Rect shape) {
+    super(shape);
     type = 'D';
-  }
-
-  @Override
-  public Feature scale(double s) {
-    return new FeatureD(rect.scale(s));
   }
   
   @Override
-  public int getValue(IntegralImage img) {
-    int x = rect.getX(), y = rect.getY(), 
-        w = rect.getWidth(), h = rect.getHeight();
-    Rect rect1 = new Rect(x, y, w, h);
-    Rect rect2 = new Rect(x, y + 2 * h, w, h);
-    Rect rect3 = new Rect(x, y + h, w, h);
-    return img.sumValue(rect1) + img.sumValue(rect2) - img.sumValue(rect3);
+  public int getValue(IntegralImage img, Rect workingRect) {
+    int x = workingRect.getX(), y = workingRect.getY(), 
+        w = workingRect.getWidth(), h = workingRect.getHeight();
+    Rect workingRect1 = new Rect(x, y, w, h);
+    Rect workingRect2 = new Rect(x, y + 2 * h, w, h);
+    Rect workingRect3 = new Rect(x, y + h, w, h);
+    return img.sumValue(workingRect1) + img.sumValue(workingRect2) 
+        - img.sumValue(workingRect3);
   }
 
 }

@@ -8,6 +8,7 @@ public class C {
   
   public static final int SIZE_X = 24;
   public static final int SIZE_Y = 24;
+  public static final Rect STD_RECT = new Rect(0, 0, 24, 24);
   
   public static final int FACE_NUM = 4916;
   public static final int NONFACE_NUM = 7960;

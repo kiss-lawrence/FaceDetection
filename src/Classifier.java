@@ -1,5 +1,5 @@
 public interface Classifier {
 
-  Lable classify(IntegralImage img, double scale);
+  Lable classify(IntegralImage img, Rect windowRect);
   
 }

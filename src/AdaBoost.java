@@ -47,7 +47,7 @@ public class AdaBoost {
       double sumErr = 0d; 
       for (int j = 0; j < samples.size(); j++) {
         WeightedSample ws = samples.get(j);
-        if (wkCf.classify(ws.getImage(), 1d) != ws.getLable()) {
+        if (wkCf.classify(ws.getImage(), C.STD_RECT) != ws.getLable()) {
           sumErr += ws.getWeight();
         } else {
           temCorrectOnes.add(j);

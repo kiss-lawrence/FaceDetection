@@ -9,9 +9,9 @@ public class Rect {
     this.height = height;
   }
   
-  public Rect scale(double s) {
-    return new Rect((int)Math.round(x * s), (int)Math.round(y * s), 
-        (int)Math.round(width * s), (int) Math.round(height * s));
+  @Override
+  public Rect clone() {
+    return new Rect(x, y, width, height);
   }
   
   public int getX() {
@@ -41,5 +41,11 @@ public class Rect {
     int newY = (y + another.y) / 2;
     return new Rect(newX, newY, newWidth, newHeight);
   }
+  
+  @Override
+  public String toString() {
+    return "x = " + x + " y = " + y + " width = " + width + " height = " + height;
+  }
+
 
 }

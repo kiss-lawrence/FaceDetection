@@ -88,7 +88,7 @@ public class WeakTrainer {
     for (Feature f : features) {
       int faceSum = 0, nonfaceSum = 0;
       for (Sample s : samples) {
-        int val = f.getValue(s.getImage());
+        int val = f.getValue(s.getImage(), f.getShape());
         if (s.getLable() == Lable.FACE) {
           faceSum += val;
         } else {

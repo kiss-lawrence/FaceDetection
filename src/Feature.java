@@ -1,14 +1,21 @@
 public abstract class Feature {
   
   protected char type;
-  protected final Rect rect;
+  protected final Rect shape;
   
   public Feature(Rect r) {
-    rect = r;
+    shape = r;
   }
   
-  public abstract Feature scale(double s);
+  public Rect getShape() {
+    return shape;
+  }
   
-  public abstract int getValue(IntegralImage img);
+  @Override
+  public String toString() {
+    return type + " " + shape.toString();
+  }
+  
+  public abstract int getValue(IntegralImage img, Rect workingRect);
 
 }

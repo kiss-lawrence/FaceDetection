@@ -1,9 +1,8 @@
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class Detector {
 
-  private BufferedImage img;
+  private IntegralImage img;
   private Classifier cf;
   
   private static final double MIN_DIST_BETWEEN_FACES = 10.0d;
@@ -14,7 +13,7 @@ public class Detector {
   private static final int scanTimes = 10;
   
   public Detector(String path, Classifier cf) {
-    img = Utils.readBufferedImage(path);
+    img = new IntegralImage(path);
     this.cf = cf;
     this.distThreshold = MIN_DIST_BETWEEN_FACES;
   }
@@ -23,9 +22,14 @@ public class Detector {
     distThreshold = newVal;
   }
   
+  public void setClassifier(Classifier cf) {
+    this.cf = cf;
+  }
+  
   public ArrayList<Rect> getFaces() {
     ArrayList<Rect> ret = new ArrayList<Rect>();
     double scale = 1.0d;
+    int count = 0;
     for (int t = 0; t < scanTimes; t++) {
       scale *= scaleFactor;
       double move = scale * moveFactor;
@@ -40,35 +44,31 @@ public class Detector {
           if (y + height - 1 >= img.getHeight()) break;
           
           Rect window = new Rect(x, y, width, height);
-          IntegralImage igImg = subWindow(window);
-          if (cf.classify(igImg, scale) == Lable.FACE) {
+          count++;
+          if (cf.classify(img, window) == Lable.FACE) {
             ret.add(window);
           }
         }
       }
     }
-    
+    System.out.println(count);
+    System.out.println(ret.size());
     return combineFaces(ret);
-  }
-  
-  private IntegralImage subWindow(Rect r) {
-    return new IntegralImage(img.getSubimage(r.getX(), r.getY(), 
-        r.getWidth(), r.getHeight()));
   }
   
   private ArrayList<Rect> combineFaces(ArrayList<Rect> faces) {
     ArrayList<Rect> ret = new ArrayList<Rect>();
-    for (int i = 0; i < faces.size(); i++) {
+    outer: for (int i = 0; i < faces.size(); i++) {
+      Rect unchecked = faces.get(i);
       for (int j = 0; j < ret.size(); j++) {
-        Rect unchecked = faces.get(i);
         Rect checked = ret.get(j);
         double dist = unchecked.getCenter().distWith(checked.getCenter());
         if (dist <= distThreshold) {
           ret.set(j, checked.meanRect(unchecked));
-        } else {
-          ret.add(unchecked);
+          continue outer;
         }
       }
+      ret.add(unchecked);
     }
     return ret;
   }

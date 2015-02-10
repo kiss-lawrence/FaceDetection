@@ -20,6 +20,8 @@ public class Utils {
     xstream.alias("featureE", FeatureE.class);
     
     xstream.alias("weakClassifier", WeakClassifier.class);
+    
+    xstream.alias("rect", Rect.class);
   }
   
   public static void printTime(PrintStream output, String forWhat, long mili) {
